@@ -5,12 +5,7 @@
   "description": "Debug Tools for mod and modpack developer",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["Chronophylos"],
-  "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
+  "url": "https://github.com/Chronophylos/mc-debugtools",
+  "authorList": ["Chronophylos"]
 }
 ]

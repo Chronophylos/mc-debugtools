@@ -1,0 +1,160 @@
+package com.chronophylos.debugtools.command.commands;
+
+import com.chronophylos.debugtools.DebugTools;
+import net.ilexiconn.llibrary.server.command.ICommandExecutor;
+import net.ilexiconn.llibrary.server.command.argument.CommandArguments;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentString;
+
+import java.io.PrintWriter;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+public class DumpExecuter implements ICommandExecutor {
+    private boolean showNBT = false;
+    private String modid = null;
+
+    private static final String filename = "itemdump.txt";
+
+
+    private void dumpRegistry(ICommandSender sender) {
+        SortedSet<String> items = new TreeSet<>();
+        String filename = (modid != null ? modid + "_" : "") + DumpExecuter.filename;
+
+        for (Item item : Item.REGISTRY) {
+            ResourceLocation registryName = item.getRegistryName();
+            if (registryName == null) {
+                DebugTools.LOGGER.warn(item.getUnlocalizedName() + " has a null registry name");
+                continue;
+            }
+
+            if (modid != null && !registryName.getResourceDomain().equalsIgnoreCase(modid)) {
+                continue;
+            }
+
+            items.addAll(dumpItem(item));
+        }
+
+        writeItemDump(sender, items);
+    }
+
+    void writeItemDump(ICommandSender sender, SortedSet<String> items) {
+        try {
+            PrintWriter writer = new PrintWriter(filename, "UTF-8");
+            items.forEach(writer::println);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        sender.sendMessage(new TextComponentString("Dumped " + items.size() + " items to " + filename));
+    }
+
+    SortedSet<String> dumpItem(Item item) {
+        SortedSet<String> items = new TreeSet<>();
+
+        if (item.getHasSubtypes()) {
+            NonNullList<ItemStack> itemStacks = NonNullList.create();
+
+            CreativeTabs creativeTab = item.getCreativeTab();
+            if (creativeTab == null) creativeTab = CreativeTabs.SEARCH;
+
+            item.getSubItems(creativeTab, itemStacks);
+            for (ItemStack itemStack : itemStacks) {
+                items.add(itemToString(itemStack));
+            }
+        } else {
+            items.add(itemToString(item));
+        }
+
+        return items;
+    }
+
+    SortedSet<String> dumpItemStack(ItemStack itemStack) {
+        SortedSet<String> items = new TreeSet<>();
+
+        items.add(itemToString(itemStack));
+
+        return items;
+    }
+
+    void dumpHand(Entity sender) {
+        SortedSet<String> items = new TreeSet<>();
+
+        for (ItemStack itemStack : sender.getHeldEquipment()) {
+            items.addAll(dumpItemStack(itemStack));
+        }
+
+        writeItemDump(sender, items);
+    }
+
+    private String itemToString(Item item) {
+        return String.valueOf(item.getRegistryName());
+    }
+
+    private String itemToString(ItemStack itemStack) {
+        // Get NBT data if the item has any
+        String nbt =
+                itemStack.hasTagCompound() && showNBT ? itemStack.getTagCompound().toString() : "";
+        return itemToString(itemStack.getItem()) + "#" + itemStack.getItemDamage() + nbt;
+    }
+
+    void ensureIsEntity(ICommandSender sender) throws CommandException {
+        if (!(sender instanceof Entity)) {
+            throw new WrongUsageException("Invoker must be a entity with inventory");
+        }
+    }
+
+    @Override
+    public void execute(MinecraftServer server, ICommandSender sender, CommandArguments arguments) throws CommandException {
+        if (arguments.hasArgument("modid")) {
+            modid = arguments.getArgument("modid");
+            switch (modid) {
+                case "*":
+                case "all":
+                    modid = null;
+            }
+        }
+
+        if (arguments.hasArgument("showNBT")) {
+            showNBT = arguments.getArgument("showNBT");
+        }
+
+        String which = arguments.getArgument("which");
+
+        switch (which) {
+            case "h":
+            case "hand":
+                ensureIsEntity(sender);
+                dumpHand((Entity) sender);
+                break;
+            case "i":
+            case "inv":
+            case "inventory":
+                //ensureIsEntity(sender);
+                //sender.sendMessage(new TextComponentString("not yet implemented"));
+                //break;
+            case "b":
+            case "hotbar":
+                ensureIsEntity(sender);
+                sender.sendMessage(new TextComponentString("not yet implemented"));
+                break;
+            case "a":
+            case "all":
+            case "registry":
+                dumpRegistry(sender);
+                break;
+            default:
+                throw new WrongUsageException("I don't know what do dump.");
+        }
+    }
+}

@@ -8,6 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -44,10 +45,10 @@ public class DumpExecuter implements ICommandExecutor {
             items.addAll(dumpItem(item));
         }
 
-        writeItemDump(sender, items);
+        writeItemDump(sender, items, filename);
     }
 
-    void writeItemDump(ICommandSender sender, SortedSet<String> items) {
+    private static void writeItemDump(ICommandSender sender, SortedSet<String> items, String filename) {
         try {
             PrintWriter writer = new PrintWriter(filename, "UTF-8");
             items.forEach(writer::println);
@@ -59,7 +60,7 @@ public class DumpExecuter implements ICommandExecutor {
         sender.sendMessage(new TextComponentString("Dumped " + items.size() + " items to " + filename));
     }
 
-    SortedSet<String> dumpItem(Item item) {
+    private SortedSet<String> dumpItem(Item item) {
         SortedSet<String> items = new TreeSet<>();
 
         if (item.getHasSubtypes()) {
@@ -79,7 +80,7 @@ public class DumpExecuter implements ICommandExecutor {
         return items;
     }
 
-    SortedSet<String> dumpItemStack(ItemStack itemStack) {
+    private SortedSet<String> dumpItemStack(ItemStack itemStack) {
         SortedSet<String> items = new TreeSet<>();
 
         items.add(itemToString(itemStack));
@@ -87,14 +88,28 @@ public class DumpExecuter implements ICommandExecutor {
         return items;
     }
 
-    void dumpHand(Entity sender) {
+    private void dumpHand(Entity sender) {
         SortedSet<String> items = new TreeSet<>();
+        String filename = "hand_" + DumpExecuter.filename;
 
         for (ItemStack itemStack : sender.getHeldEquipment()) {
+            if (itemStack.getItem() == Items.AIR) continue;
             items.addAll(dumpItemStack(itemStack));
         }
 
-        writeItemDump(sender, items);
+        writeItemDump(sender, items, filename);
+    }
+
+    private void dumpInventory(Entity sender) {
+        SortedSet<String> items = new TreeSet<>();
+        String filename = "inv_" + DumpExecuter.filename;
+
+        for (ItemStack itemStack : sender.getArmorInventoryList()) {
+            if (itemStack.getItem() == Items.AIR) continue;
+            items.addAll(dumpItemStack(itemStack));
+        }
+
+        writeItemDump(sender, items, filename);
     }
 
     private String itemToString(Item item) {
@@ -103,14 +118,16 @@ public class DumpExecuter implements ICommandExecutor {
 
     private String itemToString(ItemStack itemStack) {
         // Get NBT data if the item has any
-        String nbt =
-                itemStack.hasTagCompound() && showNBT ? itemStack.getTagCompound().toString() : "";
+        String nbt = "";
+        if (itemStack.hasTagCompound() && showNBT) {
+            nbt = itemStack.getTagCompound().toString();
+        }
         return itemToString(itemStack.getItem()) + "#" + itemStack.getItemDamage() + nbt;
     }
 
-    void ensureIsEntity(ICommandSender sender) throws CommandException {
+    private static void ensureIsEntity(ICommandSender sender) throws CommandException {
         if (!(sender instanceof Entity)) {
-            throw new WrongUsageException("Invoker must be a entity with inventory");
+            throw new WrongUsageException("Invoker must be a entity");
         }
     }
 
@@ -140,9 +157,9 @@ public class DumpExecuter implements ICommandExecutor {
             case "i":
             case "inv":
             case "inventory":
-                //ensureIsEntity(sender);
-                //sender.sendMessage(new TextComponentString("not yet implemented"));
-                //break;
+                ensureIsEntity(sender);
+                dumpInventory((Entity) sender);
+                break;
             case "b":
             case "hotbar":
                 ensureIsEntity(sender);

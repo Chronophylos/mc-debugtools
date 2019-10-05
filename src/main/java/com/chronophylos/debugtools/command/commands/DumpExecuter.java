@@ -137,6 +137,7 @@ public class DumpExecuter implements ICommandExecutor {
             modid = arguments.getArgument("modid");
             switch (modid) {
                 case "*":
+                case "a":
                 case "all":
                     modid = null;
             }

@@ -8,15 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.1] - 2019-10-05
 
-## Fixed
+### Fixed
+
 * Crash on init due to wrong version
 
 ## [0.2.0] - 2019-10-05
 
 ### Added
+
 * /debugtools command
 
 ### Changed
+
 * /dump is now a subcommand of /debugtools
 * /nbtdump is now a options of /debugtools dump
 
@@ -36,7 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * dump command
     * `/dump [modid] – dump all item ids of all mods or a specific mod`
 
-[Unreleased]: https://github.com/chronophylos/mc-debugtools/compare/v0.2.0..HEAD
+
+
+[Unreleased]: https://github.com/chronophylos/mc-debugtools/compare/v0.2.1..HEAD
+[0.2.1]: https://github.com/chronophylos/mc-debugtools/compare/v0.2.0..v0.2.1
 [0.2.0]: https://github.com/chronophylos/mc-debugtools/compare/v0.1.0..v0.2.0
 [0.1.0]: https://github.com/chronophylos/mc-debugtools/compare/v0.0.1..v0.1.0
 [0.0.1]: https://github.com/chronophylos/mc-debugtools/releases/tag/v0.0.1

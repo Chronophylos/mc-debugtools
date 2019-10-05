@@ -10,7 +10,13 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = DebugTools.MOD_ID, name = DebugTools.MOD_NAME, version = DebugTools.VERSION)
+@Mod(
+        modid = DebugTools.MOD_ID,
+        name = DebugTools.MOD_NAME,
+        version = DebugTools.VERSION,
+        dependencies = "required-after:llibrary@[1.7.9,)",
+        acceptedMinecraftVersions = "[1.12.2]"
+)
 public class DebugTools {
   public static final String MOD_ID = "debugtools";
   public static final String MOD_NAME = "Debug Tools";

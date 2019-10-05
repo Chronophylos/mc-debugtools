@@ -26,7 +26,6 @@ minecraft {
     mappings = "${mappings_version}"
 
     replace '@VERSION@', project.version
-    replace '@MCVERSION@', project.minecraft.version
     replaceIn "DebugTools.java"
 }
 

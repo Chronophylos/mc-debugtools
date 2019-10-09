@@ -1,11 +1,11 @@
 [
 {
-  "modid": "debugtools",
-  "name": "Debug Tools",
-  "description": "Debug Tools for mod and modpack developer",
+  "modid": "${mod_id}",
+  "name": "${mod_name}",
+  "description": "${description}",
   "version": "${version}",
-  "mcversion": "${mcversion}",
+  "mcversion": "${mc_version}",
   "url": "https://github.com/Chronophylos/mc-debugtools",
-  "authorList": ["Chronophylos"]
+  "author": "${author}"
 }
 ]

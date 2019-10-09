@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class DebugTools {
   public static final String MOD_ID = "debugtools";
   public static final String MOD_NAME = "Debug Tools";
-  public static final String VERSION = "@VERSION@";
+  public static final String VERSION = "%VERSION%";
 
   public static final Logger LOGGER = LogManager.getLogger("DebugTools");
 
@@ -32,8 +32,7 @@ public class DebugTools {
   public void preInit(FMLPreInitializationEvent event) {}
 
   @Mod.EventHandler
-  public void init(FMLInitializationEvent event) {
-  }
+  public void init(FMLInitializationEvent event) {}
 
   @Mod.EventHandler
   public void onServerStart(FMLServerStartingEvent event) {

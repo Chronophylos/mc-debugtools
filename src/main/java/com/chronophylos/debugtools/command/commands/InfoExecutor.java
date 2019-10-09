@@ -33,14 +33,15 @@ public class InfoExecutor implements ICommandExecutor {
         Entity entity = (Entity) sender;
         ItemStack itemStack = getItemInHand(entity);
         Item item = itemStack.getItem();
+        String tabLabel = item.getCreativeTab() != null ? item.getCreativeTab().getTabLabel() : "None";
 
         String stringBuilder = "Name: " + itemStack.getDisplayName() + "\n" +
                 "ID: " + itemStack.getCount() + "x" + item.getRegistryName() + "@" + itemStack.getMetadata() + "\n" +
                 "Type: " + item.getRegistryType().getName() + "\n" +
                 "Enchantments: " + itemStack.getEnchantmentTagList().toString() + "\n" +
-                "Tab: " + item.getCreativeTab().getTabLabel() + "\n" +
+                "Tab: " + tabLabel + "\n" +
                 "Unlocalized Name: " + itemStack.getUnlocalizedName() + "\n" +
-                "NBT Data: " + itemStack.getTagCompound() + "\n";
+                "NBT Data: " + itemStack.getTagCompound();
         sender.sendMessage(new TextComponentString(stringBuilder));
 
     }

@@ -38,4 +38,10 @@ public class ModCommand extends CommandTreeBase {
         aliases.add(name);
         return this;
     }
+
+    public DCommand createCommand(String name) {
+        DCommand cmd = DCommand.create(name);
+        addSubcommand(cmd);
+        return cmd;
+    }
 }

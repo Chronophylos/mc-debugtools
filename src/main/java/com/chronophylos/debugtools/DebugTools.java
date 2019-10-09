@@ -1,8 +1,7 @@
 package com.chronophylos.debugtools;
 
-import com.chronophylos.debugtools.command.DCommand;
 import com.chronophylos.debugtools.command.ModCommand;
-import com.chronophylos.debugtools.command.commands.DumpExecuter;
+import com.chronophylos.debugtools.command.commands.DumpExecutor;
 import com.chronophylos.debugtools.command.commands.InfoExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -38,18 +37,16 @@ public class DebugTools {
   public void onServerStart(FMLServerStartingEvent event) {
     ModCommand cmd = new ModCommand("debugtools").addAlias("dt");
 
-    DCommand dump = DCommand.create("dump")
+    cmd.createCommand("dump")
             .addAlias("d")
             .addRequiredArgument("which", String.class)
             .addOptionalArgument("modid", String.class)
             .addOptionalArgument("showNBT", Boolean.class)
-            .setExecutor(new DumpExecuter());
-    cmd.addSubcommand(dump);
+            .setExecutor(new DumpExecutor());
 
-    DCommand info = DCommand.create("info")
+    cmd.createCommand("info")
             .addAlias("i")
             .setExecutor(new InfoExecutor());
-    cmd.addSubcommand(info);
 
     event.registerServerCommand(cmd);
   }

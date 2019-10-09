@@ -20,7 +20,7 @@ import java.io.PrintWriter;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class DumpExecuter implements ICommandExecutor {
+public class DumpExecutor implements ICommandExecutor {
     private boolean showNBT = false;
     private String modid = null;
 
@@ -29,7 +29,7 @@ public class DumpExecuter implements ICommandExecutor {
 
     private void dumpRegistry(ICommandSender sender) {
         SortedSet<String> items = new TreeSet<>();
-        String filename = (modid != null ? modid + "_" : "") + DumpExecuter.filename;
+        String filename = (modid != null ? modid + "_" : "") + DumpExecutor.filename;
 
         for (Item item : Item.REGISTRY) {
             ResourceLocation registryName = item.getRegistryName();
@@ -90,7 +90,7 @@ public class DumpExecuter implements ICommandExecutor {
 
     private void dumpHand(Entity sender) {
         SortedSet<String> items = new TreeSet<>();
-        String filename = "hand_" + DumpExecuter.filename;
+        String filename = "hand_" + DumpExecutor.filename;
 
         for (ItemStack itemStack : sender.getHeldEquipment()) {
             if (itemStack.getItem() == Items.AIR) continue;
@@ -102,7 +102,7 @@ public class DumpExecuter implements ICommandExecutor {
 
     private void dumpInventory(Entity sender) {
         SortedSet<String> items = new TreeSet<>();
-        String filename = "inv_" + DumpExecuter.filename;
+        String filename = "inv_" + DumpExecutor.filename;
 
         for (ItemStack itemStack : sender.getArmorInventoryList()) {
             if (itemStack.getItem() == Items.AIR) continue;

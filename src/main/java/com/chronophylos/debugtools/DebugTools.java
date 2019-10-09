@@ -3,6 +3,7 @@ package com.chronophylos.debugtools;
 import com.chronophylos.debugtools.command.DCommand;
 import com.chronophylos.debugtools.command.ModCommand;
 import com.chronophylos.debugtools.command.commands.DumpExecuter;
+import com.chronophylos.debugtools.command.commands.InfoExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -45,6 +46,11 @@ public class DebugTools {
             .addOptionalArgument("showNBT", Boolean.class)
             .setExecutor(new DumpExecuter());
     cmd.addSubcommand(dump);
+
+    DCommand info = DCommand.create("info")
+            .addAlias("i")
+            .setExecutor(new InfoExecutor());
+    cmd.addSubcommand(info);
 
     event.registerServerCommand(cmd);
   }

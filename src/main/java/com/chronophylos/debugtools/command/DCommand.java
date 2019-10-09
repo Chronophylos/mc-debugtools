@@ -2,7 +2,6 @@ package com.chronophylos.debugtools.command;
 
 import com.chronophylos.debugtools.DebugTools;
 import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.server.command.CommandHandler;
 import net.ilexiconn.llibrary.server.command.ICommandExecutor;
 import net.ilexiconn.llibrary.server.command.argument.Argument;
@@ -26,6 +25,7 @@ import java.util.Map;
 
 /**
  * @author iLexiconn, Chronophylos
+ * Note: this is taken from LLibrary
  */
 public class DCommand extends CommandBase {
     private String name;

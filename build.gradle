@@ -18,8 +18,8 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = mc_version + "-" + mod_version
-group = "com.rlnt.ihmam"
-archivesBaseName = "IHMAM"
+group = "com.chronophylos.debugtools"
+archivesBaseName = "DebugTools"
 
 sourceCompatibility = targetCompatibility = 1.8
 

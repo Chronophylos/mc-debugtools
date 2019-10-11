@@ -23,7 +23,7 @@ public class DebugTools {
   public static final String MOD_NAME = "Debug Tools";
   public static final String VERSION = "%VERSION%";
 
-  public static final Logger LOGGER = LogManager.getLogger("Debug Tools");
+  public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
   @Mod.Instance(DebugTools.MOD_ID)
   public static DebugTools INSTANCE;

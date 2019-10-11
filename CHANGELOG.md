@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.2.2] - 2019-10-11
+
 ### Added
 
 * info command for the currently hold item
@@ -46,7 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * `/dump [modid] – dump all item ids of all mods or a specific mod`
 
 
-[Unreleased]: https://github.com/chronophylos/mc-debugtools/compare/v0.2.1..HEAD
+[Unreleased]: https://github.com/chronophylos/mc-debugtools/compare/v0.2.2..HEAD
+[0.2.2]: https://github.com/chronophylos/mc-debugtools/compare/v0.2.1..v0.2.2
 [0.2.1]: https://github.com/chronophylos/mc-debugtools/compare/v0.2.0..v0.2.1
 [0.2.0]: https://github.com/chronophylos/mc-debugtools/compare/v0.1.0..v0.2.0
 [0.1.0]: https://github.com/chronophylos/mc-debugtools/compare/v0.0.1..v0.1.0

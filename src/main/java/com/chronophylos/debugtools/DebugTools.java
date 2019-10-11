@@ -3,6 +3,7 @@ package com.chronophylos.debugtools;
 import com.chronophylos.debugtools.command.ModCommand;
 import com.chronophylos.debugtools.command.commands.DumpExecutor;
 import com.chronophylos.debugtools.command.commands.InfoExecutor;
+import com.chronophylos.debugtools.command.commands.TestWorldExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -22,7 +23,7 @@ public class DebugTools {
   public static final String MOD_NAME = "Debug Tools";
   public static final String VERSION = "%VERSION%";
 
-  public static final Logger LOGGER = LogManager.getLogger("DebugTools");
+  public static final Logger LOGGER = LogManager.getLogger("Debug Tools");
 
   @Mod.Instance(DebugTools.MOD_ID)
   public static DebugTools INSTANCE;
@@ -42,11 +43,17 @@ public class DebugTools {
             .addRequiredArgument("which", String.class)
             .addOptionalArgument("modid", String.class)
             .addOptionalArgument("showNBT", Boolean.class)
-            .setExecutor(new DumpExecutor());
+            .setExecutor(new DumpExecutor())
+            .done();
 
     cmd.createCommand("info")
             .addAlias("i")
-            .setExecutor(new InfoExecutor());
+            .setExecutor(new InfoExecutor())
+            .done();
+
+    cmd.createCommand("makeTestWord")
+            .setExecutor(new TestWorldExecutor())
+            .done();
 
     event.registerServerCommand(cmd);
   }

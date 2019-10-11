@@ -25,7 +25,7 @@ public class ModCommand extends CommandTreeBase {
         return getSubCommands()
                 .stream()
                 .map(cmd -> cmd.getUsage(sender))
-                .map(usage -> "/" + name + usage)
+                .map(usage -> "/" + name + " " + usage)
                 .collect(Collectors.joining("\n"));
     }
 
@@ -40,8 +40,6 @@ public class ModCommand extends CommandTreeBase {
     }
 
     public DCommand createCommand(String name) {
-        DCommand cmd = DCommand.create(name);
-        addSubcommand(cmd);
-        return cmd;
+        return DCommand.create(name, this);
     }
 }

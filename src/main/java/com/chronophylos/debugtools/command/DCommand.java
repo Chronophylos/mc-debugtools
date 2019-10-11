@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.server.command.CommandTreeBase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,7 @@ import java.util.Map;
  */
 public class DCommand extends CommandBase {
     private String name;
+    private CommandTreeBase parent;
     private String commandUsage;
     private int permissionLevel = 4;
     private ListHashMap<String, IArgumentParser<?>> requiredArguments = new ListHashMap<>();
@@ -36,18 +38,21 @@ public class DCommand extends CommandBase {
     private ICommandExecutor executor;
     private List<String> aliases = new ArrayList<>();
 
-    private DCommand(String name) {
+    private DCommand(String name, CommandTreeBase parent) {
         this.name = name;
+        this.parent = parent;
     }
 
     /**
      * Create a new command instance.
      *
      * @param name the command name
+     * @param parent the parent command
+     *
      * @return the new command instance
      */
-    public static DCommand create(String name) {
-        return new DCommand(name);
+    public static DCommand create(String name, CommandTreeBase parent) {
+        return new DCommand(name, parent);
     }
 
     /**
@@ -116,6 +121,10 @@ public class DCommand extends CommandBase {
     public DCommand setExecutor(ICommandExecutor executor) {
         this.executor = executor;
         return this;
+    }
+
+    public void done() {
+        this.parent.addSubcommand(this);
     }
 
     @Override

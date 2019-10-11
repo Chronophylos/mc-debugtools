@@ -9,13 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * info command for the currently hold item
-* tick command to modfiy tick rate
+* makeTestWorld - This command sets some gamerules for a simple test world
+
 
 ## [0.2.1] - 2019-10-05
 
 ### Fixed
 
 * Crash on init due to wrong version
+
 
 ## [0.2.0] - 2019-10-05
 
@@ -27,7 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * /dump is now a subcommand of /debugtools
 * /nbtdump is now a options of /debugtools dump
-
 
 
 ## [0.1.0] - 2019-09-16
@@ -43,7 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * dump command
     * `/dump [modid] – dump all item ids of all mods or a specific mod`
-
 
 
 [Unreleased]: https://github.com/chronophylos/mc-debugtools/compare/v0.2.1..HEAD
